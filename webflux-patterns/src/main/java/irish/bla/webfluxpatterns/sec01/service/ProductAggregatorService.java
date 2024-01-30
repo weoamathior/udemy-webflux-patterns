@@ -17,13 +17,13 @@ public class ProductAggregatorService {
     private final PromotionClient promotionClient;
     private final ReviewClient reviewClient;
 
-    public Mono<ProductAggregator> aggregate(Integer id) {
+    public Mono<ProductAggregate> aggregate(Integer id) {
         return Mono.zip(productClient.getProduct(id), promotionClient.getPromotion(id), reviewClient.getReview(id))
                 .map(t -> toDto(t.getT1(), t.getT2(), t.getT3()));
 
     }
 
-    private ProductAggregator toDto(ProductResponse product, PromotionResponse promotion, List<Review> reviews) {
+    private ProductAggregate toDto(ProductResponse product, PromotionResponse promotion, List<Review> reviews) {
         Price price = new Price();
         double amountSaved = product.getPrice() * promotion.getDiscount() / 100;
         double discountedPrice = product.getPrice() - amountSaved;
@@ -33,7 +33,7 @@ public class ProductAggregatorService {
         price.setDiscountedPrice(discountedPrice);
         price.setEndDate(promotion.getEndDate());
 
-        return ProductAggregator.builder()
+        return ProductAggregate.builder()
                 .id(product.getId())
                 .category(product.getCategory())
                 .description(product.getDescription())
