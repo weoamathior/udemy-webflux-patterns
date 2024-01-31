@@ -1,6 +1,5 @@
 package irish.bla.webfluxpatterns.sec01.client;
 
-import irish.bla.webfluxpatterns.sec01.dto.ProductResponse;
 import irish.bla.webfluxpatterns.sec01.dto.PromotionResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,9 @@ public class PromotionClient {
     public Mono<PromotionResponse> getPromotion(Integer id) {
         return client.get().uri("{id}", id)
                 .retrieve()
-                .bodyToMono(PromotionResponse.class);
-
+                .bodyToMono(PromotionResponse.class)
+                .onErrorReturn(PromotionResponse.emptyPromption());
 
     }
+
 }

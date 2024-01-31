@@ -18,7 +18,10 @@ public class ProductAggregatorService {
     private final ReviewClient reviewClient;
 
     public Mono<ProductAggregate> aggregate(Integer id) {
-        return Mono.zip(productClient.getProduct(id), promotionClient.getPromotion(id), reviewClient.getReview(id))
+        return Mono.zip(
+                        productClient.getProduct(id),
+                        promotionClient.getPromotion(id),
+                        reviewClient.getReview(id))
                 .map(t -> toDto(t.getT1(), t.getT2(), t.getT3()));
 
     }
