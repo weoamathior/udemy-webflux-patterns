@@ -18,7 +18,9 @@ public class ProductClient {
     public Mono<ProductResponse> getProduct(Integer id) {
         return client.get().uri("{id}", id)
                 .retrieve()
-                .bodyToMono(ProductResponse.class);
+                .bodyToMono(ProductResponse.class)
+                // the zip method in the aggregator will coalesce around empty
+                .onErrorResume(ex -> Mono.empty());
 
     }
 }
