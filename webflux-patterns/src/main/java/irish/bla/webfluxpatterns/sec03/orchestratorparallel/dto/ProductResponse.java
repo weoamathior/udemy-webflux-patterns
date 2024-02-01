@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "create")
-public class Product {
+public class ProductResponse {
     private Integer id;
     private String category;
     private String description;

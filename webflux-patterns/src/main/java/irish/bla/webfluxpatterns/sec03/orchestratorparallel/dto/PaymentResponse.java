@@ -12,4 +12,8 @@ public class PaymentResponse {
     private String name;
     private Integer balance;
     private Status status;
+
+    public static PaymentResponse buildErrorFrom(PaymentRequest request) {
+        return PaymentResponse.create(request.getUserId(), null, request.getAmount(), Status.FAILED);
+    }
 }

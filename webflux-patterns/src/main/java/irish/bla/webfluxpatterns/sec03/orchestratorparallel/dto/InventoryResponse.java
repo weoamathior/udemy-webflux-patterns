@@ -12,4 +12,8 @@ public class InventoryResponse {
     private Integer quantity;
     private Integer remainingQuantity;
     private Status status;
+
+    public static InventoryResponse buildErrorFrom(InventoryRequest request) {
+        return InventoryResponse.create(request.getProductId(), request.getQuantity(), -1, Status.FAILED);
+    }
 }

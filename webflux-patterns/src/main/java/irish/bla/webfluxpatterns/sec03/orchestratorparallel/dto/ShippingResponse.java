@@ -15,4 +15,8 @@ public class ShippingResponse {
     private Status status;
     private  String expectedDelivery;
     private Address address;
+
+    public static ShippingResponse buildErrorFrom(ShippingRequest request) {
+        return ShippingResponse.create(request.getOrderId(), request.getQuantity(), Status.FAILED, null, null);
+    }
 }
