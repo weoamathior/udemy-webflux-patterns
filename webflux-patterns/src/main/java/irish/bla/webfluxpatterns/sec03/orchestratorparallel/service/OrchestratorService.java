@@ -2,6 +2,7 @@ package irish.bla.webfluxpatterns.sec03.orchestratorparallel.service;
 
 import irish.bla.webfluxpatterns.sec03.orchestratorparallel.client.ProductClient;
 import irish.bla.webfluxpatterns.sec03.orchestratorparallel.dto.*;
+import irish.bla.webfluxpatterns.sec03.orchestratorparallel.util.DebugUtil;
 import irish.bla.webfluxpatterns.sec03.orchestratorparallel.util.OrchestrationUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class OrchestratorService {
                 .doOnNext(OrchestrationUtil::buildRequestContext)
                 .flatMap(orderFulfillmentService::placeOrder)
                 .doOnNext(this::doOrderPostProcessing)
+                .doOnNext(DebugUtil::print)
                 .map(this::toOrderResponseFrom);
 
     }

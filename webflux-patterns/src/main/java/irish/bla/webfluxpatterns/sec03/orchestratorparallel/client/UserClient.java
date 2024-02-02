@@ -13,7 +13,7 @@ public class UserClient {
     private static final String REFUND = "refund";
     private final WebClient client;
 
-    public UserClient(@Value("${sec03.user.service") String baseUrl) {
+    public UserClient(@Value("${sec03.user.service}") String baseUrl) {
         this.client = WebClient.builder()
                 .baseUrl(baseUrl)
                 .build();
