@@ -50,6 +50,6 @@ public class OrchestratorService {
         return this.client.getProduct(ctx.getOrderRequest().getProductId())
                 .map(ProductResponse::getPrice)
                 .doOnNext(ctx::setProductPrice)
-                .thenReturn(ctx);
+                .map(i -> ctx);
     }
 }
