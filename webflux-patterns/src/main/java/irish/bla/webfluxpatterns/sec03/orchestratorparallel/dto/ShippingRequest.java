@@ -11,6 +11,6 @@ import java.util.UUID;
 @AllArgsConstructor(staticName = "create")
 public class ShippingRequest {
     private Integer quantity;
-    private Integer userid;
+    private Integer userId;
     private UUID orderId;
 }
