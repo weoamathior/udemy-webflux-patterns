@@ -1,9 +1,7 @@
 package irish.bla.webfluxpatterns.sec04.service;
 
-import irish.bla.webfluxpatterns.sec04.client.ProductClient;
 import irish.bla.webfluxpatterns.sec04.dto.*;
 import irish.bla.webfluxpatterns.sec04.util.DebugUtil;
-import irish.bla.webfluxpatterns.sec04.util.OrchestrationUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -11,14 +9,11 @@ import reactor.core.publisher.Mono;
 @Service
 @RequiredArgsConstructor
 public class OrchestratorService {
-    private final ProductClient client;
     private final OrderFulfillmentService orderFulfillmentService;
     private final OrderCancellationService orderCancellationService;
 
     public Mono<OrderResponse> placeOrder(Mono<OrderRequest> mono) {
         return mono.map(OrchestrationRequestContext::new)
-                .flatMap(this::getProduct)
-                .doOnNext(OrchestrationUtil::buildRequestContext)
                 .flatMap(orderFulfillmentService::placeOrder)
                 .doOnNext(this::doOrderPostProcessing)
                 .doOnNext(DebugUtil::print)
@@ -46,10 +41,4 @@ public class OrchestratorService {
         }
     }
 
-    private Mono<OrchestrationRequestContext> getProduct(OrchestrationRequestContext ctx) {
-        return this.client.getProduct(ctx.getOrderRequest().getProductId())
-                .map(ProductResponse::getPrice)
-                .doOnNext(ctx::setProductPrice)
-                .map(i -> ctx);
-    }
 }

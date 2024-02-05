@@ -12,5 +12,5 @@ import java.util.UUID;
 public class PaymentRequest {
     private Integer userId;
     private Integer amount;
-    private UUID orderid;
+    private UUID orderId;
 }
