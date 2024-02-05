@@ -1,8 +1,8 @@
-package irish.bla.webfluxpatterns.sec03.orchestratorparallel;
+package irish.bla.webfluxpatterns.sec04.controller;
 
-import irish.bla.webfluxpatterns.sec03.orchestratorparallel.dto.OrderRequest;
-import irish.bla.webfluxpatterns.sec03.orchestratorparallel.dto.OrderResponse;
-import irish.bla.webfluxpatterns.sec03.orchestratorparallel.service.OrchestratorService;
+import irish.bla.webfluxpatterns.sec04.dto.OrderRequest;
+import irish.bla.webfluxpatterns.sec04.dto.OrderResponse;
+import irish.bla.webfluxpatterns.sec04.service.OrchestratorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("sec03")
+@RequestMapping("sec04")
 public class OrderController {
     private final OrchestratorService service;
 
