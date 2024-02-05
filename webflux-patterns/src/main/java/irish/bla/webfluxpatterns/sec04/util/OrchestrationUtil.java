@@ -6,15 +6,8 @@ import irish.bla.webfluxpatterns.sec04.dto.PaymentRequest;
 import irish.bla.webfluxpatterns.sec04.dto.ShippingRequest;
 
 public class OrchestrationUtil {
-    public static void buildRequestContext(OrchestrationRequestContext context) {
 
-        buildPaymentRequest(context);
-        buildInventoryRequest(context);
-        buildShippingRequest(context);
-
-    }
-
-    private static void buildPaymentRequest(OrchestrationRequestContext ctx) {
+    public static void buildPaymentRequest(OrchestrationRequestContext ctx) {
         PaymentRequest request = PaymentRequest.create(
                 ctx.getOrderRequest().getUserId(),
                 ctx.getProductPrice() * ctx.getOrderRequest().getQuantity(),
@@ -23,20 +16,20 @@ public class OrchestrationUtil {
         ctx.setPaymentRequest(request);
     }
 
-    private static void buildInventoryRequest(OrchestrationRequestContext ctx) {
+    public static void buildInventoryRequest(OrchestrationRequestContext ctx) {
         var inventoryRequest = InventoryRequest.create(
-                ctx.getOrderId(),
+                ctx.getPaymentResponse().getPaymentId(),
                 ctx.getOrderRequest().getProductId(),
                 ctx.getOrderRequest().getQuantity()
         );
         ctx.setInventoryRequest(inventoryRequest);
     }
 
-    private static void buildShippingRequest(OrchestrationRequestContext ctx) {
+    public static void buildShippingRequest(OrchestrationRequestContext ctx) {
         var shippingRequest = ShippingRequest.create(
                 ctx.getOrderRequest().getQuantity(),
                 ctx.getOrderRequest().getUserId(),
-                ctx.getOrderId()
+                ctx.getInventoryResponse().getInventoryId()
         );
         ctx.setShippingRequest(shippingRequest);
     }
