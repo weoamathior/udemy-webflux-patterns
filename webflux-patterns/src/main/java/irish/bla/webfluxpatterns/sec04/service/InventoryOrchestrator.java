@@ -19,7 +19,8 @@ public class InventoryOrchestrator extends Orchestrator {
         return this.client
                 .deduct(ctx.getInventoryRequest())
                 .doOnNext(ctx::setInventoryResponse)
-                .thenReturn(ctx);
+                .thenReturn(ctx)
+                .handle(this.statusHandler());
     }
 
     @Override
