@@ -14,7 +14,7 @@ public class RoomReservationResponse {
     private UUID reservationId;
     private String city;
     private LocalDate checkIn;
-    private LocalDate checkout;
+    private LocalDate checkOut;
     private String category;
     private Integer price;
 }

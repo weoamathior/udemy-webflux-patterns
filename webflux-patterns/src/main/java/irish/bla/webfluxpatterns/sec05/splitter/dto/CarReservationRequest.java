@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class CarReservationRequest {
     private String city;
     private LocalDate pickup;
-    private LocalDate dropOff;
+    private LocalDate drop;
     private String category;
 
 }

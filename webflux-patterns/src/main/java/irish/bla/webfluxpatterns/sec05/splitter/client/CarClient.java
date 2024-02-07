@@ -24,8 +24,8 @@ public class CarClient {
                 .post()
                 .body(req, CarReservationRequest.class)
                 .retrieve()
-                .bodyToFlux(CarReservationResponse.class)
-                .onErrorResume(ex -> Mono.empty());
+                .bodyToFlux(CarReservationResponse.class);
+//                .onErrorResume(ex -> Mono.empty());
 
     }
 

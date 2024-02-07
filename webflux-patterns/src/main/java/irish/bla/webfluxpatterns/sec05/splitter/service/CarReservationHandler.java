@@ -21,7 +21,8 @@ public class CarReservationHandler extends ReservationHandler {
     protected Flux<ReservationItemResponse> reserve(Flux<ReservationItemRequest> req) {
         return req.map(this::toCarRequest)
                 .transform(this.client::reserve)
-                .map(this::toResponse);
+                .map(this::toResponse)
+                .doOnError(ex -> System.out.println(ex));
     }
 
     private CarReservationRequest toCarRequest(ReservationItemRequest request) {
@@ -34,7 +35,7 @@ public class CarReservationHandler extends ReservationHandler {
                 carResponse.getCategory(),
                 carResponse.getCity(),
                 carResponse.getPickup(),
-                carResponse.getDropOff(),
+                carResponse.getDrop(),
                 carResponse.getPrice());
     }
 }

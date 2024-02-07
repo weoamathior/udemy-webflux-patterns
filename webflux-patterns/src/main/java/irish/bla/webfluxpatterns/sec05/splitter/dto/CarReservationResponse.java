@@ -14,7 +14,7 @@ public class CarReservationResponse {
     private UUID reservationId;
     private String city;
     private LocalDate pickup;
-    private LocalDate dropOff;
+    private LocalDate drop;
     private String category;
     private Integer price;
 

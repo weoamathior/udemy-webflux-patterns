@@ -33,7 +33,7 @@ public class RoomReservationHandler extends ReservationHandler{
                 roomResponse.getCategory(),
                 roomResponse.getCity(),
                 roomResponse.getCheckIn(),
-                roomResponse.getCheckout(),
+                roomResponse.getCheckOut(),
                 roomResponse.getPrice());
     }
 }
