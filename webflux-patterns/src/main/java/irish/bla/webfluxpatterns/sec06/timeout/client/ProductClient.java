@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
+
 @Service
 public class ProductClient {
     private final WebClient client;
@@ -20,6 +22,7 @@ public class ProductClient {
                 .retrieve()
                 .bodyToMono(Product.class)
                 // the zip method in the aggregator will coalesce around empty
+                .timeout(Duration.ofMillis(500))
                 .onErrorResume(ex -> Mono.empty());
 
     }

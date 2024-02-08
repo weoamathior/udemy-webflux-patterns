@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
+import java.time.temporal.TemporalUnit;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class ReviewClient {
                 .retrieve()
                 .bodyToFlux(Review.class)
                 .collectList()
+                .timeout(Duration.ofMillis(500))
                 .onErrorReturn(Collections.emptyList());
 
     }
