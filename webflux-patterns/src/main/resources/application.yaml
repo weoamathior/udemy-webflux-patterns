@@ -10,12 +10,12 @@ resilience4j.circuitbreaker:
       recordExceptions: # match on these exceptions
         - org.springframework.web.reactive.function.client.WebClientResponseException
         - java.util.concurrent.TimeoutException
-#resilience4j.ratelimiter:
-#  instances:
-#    calculator-service:
-#      limitRefreshPeriod: 20s
-#      limitForPeriod: 5
-#      timeoutDuration: 5s
+resilience4j.ratelimiter:
+  instances:
+    calculator-service:
+      limitRefreshPeriod: 20s
+      limitForPeriod: 5 # i.e. only 5 per 20s bucket
+      timeoutDuration: 5s # ...but if a late request comes in, we'll hold it for five seconds to make the next window
 #    review-service:
 #      limitRefreshPeriod: 20s
 #      limitForPeriod: 3
