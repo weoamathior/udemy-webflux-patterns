@@ -1,6 +1,8 @@
 package irish.bla.webfluxpatterns.sec08.circuitbreaker.client;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import irish.bla.webfluxpatterns.sec08.circuitbreaker.dto.Review;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Service
 public class ReviewClient {
     private final WebClient client;
@@ -21,6 +24,8 @@ public class ReviewClient {
                 .build();
     }
 
+    // name from application.yaml config
+    @CircuitBreaker(name = "review-service", fallbackMethod = "fallbackReview")
     public Mono<List<Review>> getReview(Integer id) {
         return client
                 .get()
@@ -32,8 +37,12 @@ public class ReviewClient {
                 .retry(5)
 //                .retryWhen(Retry.fixedDelay(10, Duration.ofMillis(500)))
 //                .retryWhen(Retry.backoff(10, Duration.ofMillis(500)))
-                .timeout(Duration.ofMillis(300))
-                .onErrorReturn(Collections.emptyList());
+                .timeout(Duration.ofMillis(300));
 
+    }
+
+    public Mono<List<Review>> fallbackReview(Integer id, Throwable t) {
+        log.warn("fallbackReview called " + t.getMessage());
+        return Mono.just(Collections.emptyList());
     }
 }
