@@ -1,0 +1,23 @@
+resilience4j.circuitbreaker:
+  instances:
+    review-service:
+      slidingWindowType: COUNT_BASED
+      slidingWindowSize: 4
+      minimumNumberOfCalls: 2 # at least 2 calls before any decision made
+      failureRateThreshold: 50  # as percent: >= percent calls fail within the window
+      waitDurationInOpenState: 10s
+      permittedNumberOfCallsInHalfOpenState: 2
+      recordExceptions: # match on these exceptions
+        - org.springframework.web.reactive.function.client.WebClientResponseException
+        - java.util.concurrent.TimeoutException
+resilience4j.ratelimiter:
+  instances:
+    calculator-service:
+      limitRefreshPeriod: 20s
+      limitForPeriod: 5 # i.e. only 5 per 20s bucket
+      timeoutDuration: 5s # ...but if a late request comes in, we'll hold it for five seconds to make the next window
+    # motivation: limit our calls to a service that charges $$$
+    review-service:
+      limitRefreshPeriod: 20s
+      limitForPeriod: 3
+      timeoutDuration: 0s
